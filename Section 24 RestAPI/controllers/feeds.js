@@ -2,35 +2,63 @@ const { validationResult } = require("express-validator");
 const Post = require("../models/post");
 const User = require("../models/user");
 
-exports.getPosts = (req, res, next) => {
+// Below is the PROMIE version of the async await function. We will use async await to
+// transform this funciton and not use promise. Internally it will use PROMISE.
+// exports.getPosts = (req, res, next) => {
+//   const pageNumber = req.query.pageNumber || 1;
+//   const pageSize = req.query.pageSize || 2;
+//   let totalItems;
+//   Post.find()
+//     .countDocuments()
+//     .then((count) => {
+//       totalItems = count;
+//       return Post.find()
+//         .skip((pageNumber - 1) * pageSize)
+//         .limit(pageSize);
+//     })
+//     .then((posts) => {
+//       res
+//         .status(200)
+//         .json({
+//           message: "Success",
+//           posts: posts,
+//           totalItems: totalItems,
+//           pageNumber: pageNumber,
+//           pageSize: pageSize,
+//         });
+//     })
+//     .catch((err) => {
+//       if (!err.statusCode) {
+//         err.statusCode = 500;
+//       }
+//       next(err);
+//     });
+// };
+
+// Below is the async await function of above written PROMISE function:
+exports.getPosts = async (req, res, next) => {
   const pageNumber = req.query.pageNumber || 1;
   const pageSize = req.query.pageSize || 2;
-  let totalItems;
-  Post.find()
-    .countDocuments()
-    .then((count) => {
-      totalItems = count;
-      return Post.find()
-        .skip((pageNumber - 1) * pageSize)
-        .limit(pageSize);
-    })
-    .then((posts) => {
-      res
-        .status(200)
-        .json({
-          message: "Success",
-          posts: posts,
-          totalItems: totalItems,
-          pageNumber: pageNumber,
-          pageSize: pageSize,
-        });
-    })
-    .catch((err) => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
+
+  try {
+    const totalItems = await Post.find().countDocuments();
+    const posts = await Post.find()
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize);
+
+    res.status(200).json({
+      message: "Success",
+      posts: posts,
+      totalItems: totalItems,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
     });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
 };
 
 exports.getPostById = (req, res, next) => {
