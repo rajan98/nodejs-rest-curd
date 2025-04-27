@@ -1,0 +1,73 @@
+Async:
+*We use async concept in nodejs to increase the performance of nodejs application by not waiting for the process to complete and move to next process. 
+
+*In our REST code we intensively used Promises which uses the concept of async. Here we chain different promises together so subsequent promises in the chain will wait for the previous one to resolve before executing. If we will write code one after the other then operations like DB call will go in async and the next line of code will be executed which will result in an error.
+
+* We can also use callback for this code but we often use Promises instead of callbacks as chaining callbacks together leads to messy code which is harder to read and maintain. 
+
+* async/await is actually built on top of Promises - it's syntactic sugar that makes asynchronous code look more synchronous but still uses the Promise mechanism underneath.
+
+* We can use async await to write the code without the use of Promises. This leads to code that looks sync but we have the async and await keywords.
+Ex- PROMISE CODE:
+exports.getPosts = (req, res, next) => {
+  const pageNumber = req.query.pageNumber || 1;
+  const pageSize = req.query.pageSize || 2;
+  let totalItems;
+  Post.find()
+    .countDocuments()
+    .then((count) => {
+      totalItems = count;
+      return Post.find()
+        .skip((pageNumber - 1) * pageSize)
+        .limit(pageSize);
+    })
+    .then((posts) => {
+      res
+        .status(200)
+        .json({
+          message: "Success",
+          posts: posts,
+          totalItems: totalItems,
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+        });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+MODIFIED TO ASYNC AWAIT:
+exports.getPosts = async (req, res, next) => {
+  const pageNumber = req.query.pageNumber || 1;
+  const pageSize = req.query.pageSize || 2;
+
+  try {
+    const totalItems = await Post.find().countDocuments();
+    const posts = await Post.find()
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize);
+
+    res.status(200).json({
+      message: "Success",
+      posts: posts,
+      totalItems: totalItems,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+
+* We can use either format that best suites our coding needs. We should remember that whenever we use a 'await' keywork to wait for an operation to complete all the code after that await is wrapped into the next body of the promise. So once that operation completes the rest of the body is executed.
+
+* Mongoose actually does return "thenable" objects that are Promise-compatible, but since version 5.0, Mongoose uses native JavaScript Promises by default. So they are real Promises, though in older versions they were custom Promise implementations.
+
