@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "adbff63d-de95-46e7-acb9-abbd068c7b71",
+		"name": "NodeJS Learning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38304093"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImR1bW15ZW1haWxhbXBAdGVzdC5jb20iLCJ1c2VySWQiOiI2ODBiNjhlYjJhOTgyMGI0YjRkOGI0YjkiLCJpYXQiOjE3NDU2NDQ3NzAsImV4cCI6MTc0NTY0ODM3MH0.GKgzNkCWZLWd0f_9zVrgJ3XKJLu5czJrJWZ43IOH4YM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"New title New22\",\r\n    \"content\": \"Dummy Content With1 User attached4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/feed/post",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"feed",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Post(Paginated)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImR1bW15ZW1haWxhbXAxQHRlc3QuY29tIiwidXNlcklkIjoiNjgwYjcyNzQxY2QwMGEwNDU5YzU2NmU2IiwiaWF0IjoxNzQ1NjQxMzc0LCJleHAiOjE3NDU2NDQ5NzR9.HXOFBP4F_WBd_6isl1UBcqAdgvy155mT-peFP0SFNKY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/feed/posts?pageNumber=1&pageSize=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"feed",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImR1bW15ZW1haWxhbXAxQHRlc3QuY29tIiwidXNlcklkIjoiNjgwYjcyNzQxY2QwMGEwNDU5YzU2NmU2IiwiaWF0IjoxNzQ1NjQxMzc0LCJleHAiOjE3NDU2NDQ5NzR9.HXOFBP4F_WBd_6isl1UBcqAdgvy155mT-peFP0SFNKY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/feed/post/680b2515cb2bce712675d094",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"feed",
+								"post",
+								"680b2515cb2bce712675d094"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"New title Updated\",\r\n    \"content\": \"Updated Dummy Content\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/feed/post/680b31c6f9ffb6b18e22ada5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"feed",
+								"post",
+								"680b31c6f9ffb6b18e22ada5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImR1bW15ZW1haWxhbXAxQHRlc3QuY29tIiwidXNlcklkIjoiNjgwYjcyNzQxY2QwMGEwNDU5YzU2NmU2IiwiaWF0IjoxNzQ1NjQ0OTQ1LCJleHAiOjE3NDU2NDg1NDV9.dCE8v_nuhHcEXtGlm9O2hl5zHmy2N88cnxGhk07qjOA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/feed/post/680c605b7aec3b92b5d5c159",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"feed",
+								"post",
+								"680c605b7aec3b92b5d5c159"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"rajan\",\r\n    \"email\": \"dummyemailamp1@test.com\",\r\n    \"password\": \"tempPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"dummyemailamp1@test.com\",\r\n    \"password\": \"tempPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
